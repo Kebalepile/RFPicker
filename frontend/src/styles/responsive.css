@@ -8,18 +8,26 @@
 @media (max-width: 768px) {
   .app {
     grid-template-columns: 1fr;
+    position: relative;
   }
+
+  /* Sidebar drawer */
   .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: -280px;
-    height: auto;
+    left: 0;
+    width: 260px;
+    transform: translateX(-100%);     /* hidden by default */
+    transition: transform 0.25s ease;
     z-index: 30;
+    height: auto;
   }
   .app.nav-open .sidebar {
-    left: 0;
+    transform: translateX(0);         /* slide in when open */
   }
+
+  /* Backdrop */
   .nav-backdrop {
     display: none;
   }
@@ -30,6 +38,8 @@
     background: rgba(0, 0, 0, .55);
     z-index: 20;
   }
+
+  /* Hamburger button */
   .hamburger {
     display: inline-flex;
     align-items: center;
@@ -40,7 +50,9 @@
     border-radius: 10px;
     background: var(--panel);
     color: var(--text);
+    cursor: pointer;
   }
+
   .main {
     padding: 16px;
   }

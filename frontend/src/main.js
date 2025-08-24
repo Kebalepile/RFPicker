@@ -20,24 +20,37 @@ const routes = {
 };
 
 
-function bindDrawer() {
-  const app = document.querySelector('.app');
-  const toggle = document.getElementById('navToggle');
+function bindDrawerOnce() {
+  const app      = document.querySelector('.app');
+  const toggle   = document.getElementById('navToggle');
   const backdrop = document.getElementById('navBackdrop');
-  const links = document.querySelectorAll('[data-route]');
+  const sidebar  = document.getElementById('sidebar');
 
   const open  = () => app.classList.add('nav-open');
   const close = () => app.classList.remove('nav-open');
   const toggleNav = () => app.classList.toggle('nav-open');
 
-  toggle?.addEventListener('click', toggleNav);
-  backdrop?.addEventListener('click', close);
-  links.forEach(a => a.addEventListener('click', close));
-  document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+  // Attach ONCE
+  toggle?.addEventListener('click', toggleNav, { once: false });
+  backdrop?.addEventListener('click', close,   { once: false });
+
+  // Sidebar link clicks (works even if links change later)
+  sidebar?.addEventListener('click', (e) => {
+    if (e.target.closest('[data-route]')) close();
+  });
+
+  // Close on Esc
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
 }
 
+
 window.addEventListener('DOMContentLoaded', () => {
-  initRouter(routes, '#/landing');
-  bindDrawer();
+  initRouter(routes, '#/landing');   // your router still handles page render
+  bindDrawerOnce();                  // bind drawer listeners ONCE
 });
-window.addEventListener('hashchange', bindDrawer);
+
+// ❌ Remove this line if you had it:
+// window.addEventListener('hashchange', bindDrawer);
+
