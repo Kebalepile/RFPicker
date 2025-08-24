@@ -1,0 +1,102 @@
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  position: relative;
+}
+.sidebar {
+  background: var(--panel);
+  border-right: 1px solid var(--bd);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+  transition: left .25s;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+.logo .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+.nav {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nav a {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .15s;
+}
+.nav a.active,
+.nav a:hover {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--bd);
+}
+.footer-note {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  right: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.main {
+  padding: 24px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.search {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+}
+.input {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--bd);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.hamburger {
+  display: none;
+}
+
+.nav-backdrop {
+  display: none;
+}
+
+.progress {
+  width: 100%;
+  background: var(--bd);
+  border-radius: 999px;
+  overflow: hidden;
+  height: 10px;
+}
+.progress > div {
+  height: 10px;
+  background: var(--warn);
+}

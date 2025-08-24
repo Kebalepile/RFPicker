@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TenderPick</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <link rel="stylesheet" href="/src/styles/responsive.css" />
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="logo"><span class="dot"></span> TenderPick</div>
+      <nav class="nav">
+        <a href="#/landing" data-route>🏠 Landing</a>
+        <a href="#/workspace" data-route>🧪 Workspace</a>
+        <a href="#/tenders" data-route>🗂️ Tender List</a>
+
+        <a href="#/reports" data-route>📄 Reports</a>
+        <a href="#/settings" data-route>⚙️ Settings</a>
+      </nav>
+      <div class="footer-note">OTP + WhatsApp later (no email).</div>
+    </aside>
+
+    <div class="nav-backdrop" id="navBackdrop"></div>
+
+    <main class="main">
+      <div class="topbar">
+        <button class="hamburger" id="navToggle" aria-label="Toggle navigation">☰</button>
+        <div class="search">
+          <input class="input" placeholder="Search tenders, RFQ #, entity…" />
+          <a class="btn ghost" href="#/workspace">+ New Project</a>
+        </div>
+        <div class="pill" id="userBadge">Not signed in</div>
+      </div>
+      <div id="app"></div>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

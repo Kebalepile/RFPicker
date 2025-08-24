@@ -1,0 +1,103 @@
+/* Landing page */
+.landing {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.landing-hero {
+  text-align: center;
+  background: linear-gradient(180deg, rgba(79, 140, 255, .15), transparent);
+}
+.landing-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 12px;
+}
+.landing-title {
+  margin: 8px 0 6px 0;
+  font-size: 32px;
+}
+.landing-sub {
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.landing-cta {
+  justify-content: center;
+  margin-top: 10px;
+}
+.landing-trust {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.landing-steps .step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.landing-list {
+  margin: 8px 0 0 18px;
+  padding: 0;
+  color: var(--muted);
+}
+.landing-list li {
+  margin: 6px 0;
+}
+
+.landing-pricing .price {
+  text-align: center;
+}
+.landing-price {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 6px 0;
+}
+.landing-price .per {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.landing-pricing .featured {
+  border-color: var(--brand);
+}
+
+.landing-faq details {
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--card);
+  margin-top: 10px;
+}
+.landing-faq summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.landing-foot {
+  text-align: center;
+  margin: 10px 0 0 0;
+  font-size: 12px;
+}
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--bd);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 12px;
+}
