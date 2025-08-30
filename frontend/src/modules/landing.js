@@ -17,6 +17,7 @@ export default {
 
         <!-- Hero -->
         <header class="landing-hero card">
+        <br/>
           <div class="landing-badge">South African tender toolkit</div>
           <h1 class="landing-title">Never miss a tender requirement again.</h1>
           <p class="landing-sub">
@@ -24,7 +25,7 @@ export default {
           </p>
           <div class="row landing-cta">
             <a class="btn" id="btnTry">Try it free</a>
-            <a class="btn ghost" id="btnLogin">Login</a>
+            <a class="btn login" id="btnLogin">Login</a>
           </div>
           <div class="landing-trust">
             <span class="tag">No emails required</span>

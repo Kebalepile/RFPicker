@@ -1,48 +1,27 @@
-/* @file Reusable UI atoms/molecules: buttons, cards, grids, pills, lists. */
+/* ============= HOW IT WORKS ============= */
+.landing-steps {
+  /* center the whole strip and prevent it going too wide */
+  max-width: 1040px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: stretch; /* equal height cards */
+}
 
-/* Landing page */
-.landing {
+.landing-steps .card {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-.landing-hero {
-  text-align: center;
-  background: linear-gradient(180deg, rgba(79, 140, 255, .15), transparent);
-}
-.landing-badge {
-  display: inline-block;
-  margin-bottom: 8px;
-  padding: 6px 10px;
+  align-items: center;
+  padding: 18px 16px;
+  gap: 6px;
+  /* subtle separation from the background without being “boxy” */
   border: 1px solid var(--bd);
-  border-radius: 999px;
+  border-radius: 14px;
   background: var(--card);
-  color: var(--muted);
-  font-size: 12px;
-}
-.landing-title {
-  margin: 8px 0 6px 0;
-  font-size: 32px;
-}
-.landing-sub {
-  color: var(--muted);
-  max-width: 720px;
-  margin: 0 auto;
-}
-.landing-cta {
-  justify-content: center;
-  margin-top: 10px;
-}
-.landing-trust {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 10px;
 }
 
 .landing-steps .step-num {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--brand);
   color: #fff;
@@ -51,55 +30,185 @@
   justify-content: center;
   font-weight: 700;
   margin-bottom: 8px;
+  box-shadow: 0 6px 14px rgba(59, 130, 246, .22);
 }
 
-.landing-list {
-  margin: 8px 0 0 18px;
-  padding: 0;
-  color: var(--muted);
+/* tighter text for step titles & copy */
+.landing-steps h3 {
+  margin: 6px 0 2px 0;
 }
-.landing-list li {
-  margin: 6px 0;
+.landing-steps p {
+  margin: 0;
+  max-width: 28ch;
+}
+
+/* ================ PRICING ================ */
+.landing-pricing {
+  max-width: 1120px;
+  margin: 2px auto 0 auto; /* slight offset from FAQ/hero */
+  align-items: stretch; /* same height cards */
 }
 
 .landing-pricing .price {
+  position: relative;
   text-align: center;
+  /* requested: visible border + radius + shadow */
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04),
+    0 6px 22px rgba(17, 24, 39, 0.06);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  padding-bottom: 14px;
 }
+
+.landing-pricing .price:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.06),
+    0 12px 28px rgba(17, 24, 39, 0.10);
+  border-color: color-mix(in srgb, var(--brand) 30%, var(--bd));
+}
+
+.landing-pricing .price h3 {
+  margin-top: 6px;
+}
+
 .landing-price {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
-  margin: 6px 0;
+  margin: 8px 0 4px 0;
 }
+
 .landing-price .per {
   font-size: 14px;
   font-weight: 600;
   color: var(--muted);
 }
+
+/* featured plan stands out a bit more */
 .landing-pricing .featured {
   border-color: var(--brand);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08),
+    0 14px 36px rgba(59, 130, 246, 0.15);
+  background: linear-gradient(180deg, rgba(59, 130, 246, .04), transparent 55%),
+    var(--card);
 }
 
-.landing-faq details {
-  border: 1px solid var(--bd);
-  border-radius: 12px;
-  padding: 10px 12px;
-  background: var(--card);
-  margin-top: 10px;
+.landing-pricing .featured .btn {
+  /* stronger CTA inside featured card */
+  background: var(--brand);
+  color: var(--inverted);
 }
-.landing-faq summary {
-  cursor: pointer;
-  font-weight: 600;
+
+/* spacing tune so each card breathes nicely */
+.landing-pricing .price p.muted {
+  margin: 2px auto 10px auto;
+  max-width: 28ch;
 }
-.landing-foot {
+/* LOGIN ANCHOR AS BUTTON */
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.btn.login {
+  background: var(--brand);
+  color: var(--inverted);
+  border: none;
+  border-radius:8px;
+  padding: 10px;
+  font-weight: 500;
+  min-height:20px;
+  box-shadow: 0 6px 18px rgba(59, 130, 246, .20);
+  transition: background .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.btn.login:hover {
+  background: var(--brand-dark);
+  transform: translateY(-1px);
+}
+.btn.login:active {
+  transform: translateY(0);
+}
+.btn.login:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 35%, white);
+  outline-offset: 2px;
+}
+
+/* HOW IT WORKS — centered & tidy (kept) */
+.landing-steps {
+  max-width: 960px; /* narrower for better readability */
+  margin: 0 auto;
   text-align: center;
-  margin: 10px 0 0 0;
-  font-size: 12px;
+  align-items: stretch;
+  gap: 16px;
 }
-.chip {
-  padding: 6px 10px;
-  border-radius: 999px;
+
+/* PRICING — narrower container + responsive columns */
+.landing-pricing {
+  max-width: 960px; /* <— was 1120, now tighter */
+  margin: 8px auto 0 auto;
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* price cards: border + radius + shadow */
+.landing-pricing .price {
+  position: relative;
+  text-align: center;
   border: 1px solid var(--bd);
+  border-radius: 16px;
   background: var(--card);
-  cursor: pointer;
-  font-size: 12px;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04),
+    0 6px 22px rgba(17, 24, 39, 0.06);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  padding: 16px;
+}
+.landing-pricing .price:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.06),
+    0 12px 28px rgba(17, 24, 39, 0.10);
+  border-color: color-mix(in srgb, var(--brand) 30%, var(--bd));
+}
+
+/* featured plan emphasis */
+.landing-pricing .featured {
+  border-color: var(--brand);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08),
+    0 14px 36px rgba(59, 130, 246, 0.15);
+  background: linear-gradient(180deg, rgba(59, 130, 246, .04), transparent 55%),
+    var(--card);
+}
+.landing-pricing .featured .btn {
+  background: var(--brand);
+  color: var(--inverted);
+}
+
+/* compact text inside cards */
+.landing-pricing .price p.muted {
+  margin: 4px auto 12px auto;
+  max-width: 28ch;
+}
+
+/* ===== Responsive tweaks for pricing ===== */
+@media (max-width: 1100px) {
+  .landing-pricing {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .landing-pricing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .landing-pricing {
+    grid-template-columns: 1fr;
+  }
+  /* put featured card on top on mobile */
+  .landing-pricing .featured {
+    order: -1;
+  }
 }
