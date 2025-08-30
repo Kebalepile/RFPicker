@@ -73,15 +73,41 @@ export default {
               <div class="muted small">Supported: PDF (max 10MB)</div>
             </div>
           </div>
-          <div class="card">
+
+        <div class="card">
             <h3>Quick Actions</h3>
             <div class="list">
-              <div class="item"><div><b>Download SBD Templates</b><div class="muted">Standard bid forms</div></div><a class="btn ghost" href="#">Open</a></div>
-              <div class="item"><div><b>Expert Consultation</b><div class="muted">We do it for you (from R3,000)</div></div><a class="btn" href="#/settings">Book</a></div>
-              <div class="item"><div><b>Tender Guidelines</b><div class="muted">SA tender process</div></div><a class="btn ghost" href="#">View</a></div>
+
+                <div class="item">
+                  <div>
+                    <span class="ico">📄</span>
+                    <b>Download SBD Templates</b>
+                    <div class="muted">Standard bid forms</div>
+                  </div>
+                  <a class="btn ghost" href="#">Open</a>
+                </div>
+
+                <div class="item">
+                  <div>
+                    <span class="ico">👨‍💼</span>
+                    <b>Expert Consultation</b>
+                    <div class="muted">We do it for you (from R3,000)</div>
+                  </div>
+                  <a class="btn" href="#/settings">Book</a>
+                </div>
+
+                <div class="item">
+                  <div>
+                    <span class="ico">📘</span>
+                    <b>Tender Guidelines</b>
+                    <div class="muted">SA tender process</div>
+                  </div>
+                  <a class="btn ghost" href="#">View</a>
+                </div>
+
             </div>
-          </div>
         </div>
+
 
         <div class="card" style="margin-top:16px">
           <div class="row between">

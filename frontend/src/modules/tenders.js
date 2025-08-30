@@ -64,14 +64,49 @@ function badge(band) {
     : band.includes("R200k–R1m") ? "pill-warn" : "pill-ok";
   return `<span class="pill ${c}">${band}</span>`;
 }
+function categoryIcon(cat) {
+  return cat === "RFQ" ? "📄" : "📑"; // RFQ=doc, RFP=proposal
+}
+function sectorIcon(sec) {
+  const map = {
+    Cleaning: "🧽",
+    Security: "🛡️",
+    ICT: "💻",
+    Construction: "🛠️",
+    "Professional Services": "👔"
+  };
+  return map[sec] || "🏷️";
+}
+function provinceIcon(p) {
+  const map = {
+    Gauteng: "🏙️",
+    "Western Cape": "🗺️",
+    "Eastern Cape": "🌊",
+    "North West": "🌾",
+    Limpopo: "🌿",
+    "KwaZulu-Natal": "🏖️",
+    "Free State": "🌻",
+    Mpumalanga: "⛰️",
+    "Northern Cape": "🏜️"
+  };
+  return map[p] || "🗺️";
+}
 
 function card(t) {
   return `
   <div class="item">
     <div>
-      <b>${t.title}</b>
-      <div class="muted">${t.entity} · ${t.province} · Closes ${t.closing_date}</div>
-      <div class="muted small">Posted ${t.posted_date} · ${t.sector} · ${t.category}</div>
+      <b>${categoryIcon(t.category)} ${t.title}</b>
+      <div class="muted">
+        ${provinceIcon(
+          t.province
+        )} ${t.entity} · ${t.province} · Closes ${t.closing_date}
+      </div>
+      <div class="muted small">
+        Posted ${t.posted_date} · ${sectorIcon(
+    t.sector
+  )} ${t.sector} · ${t.category}
+      </div>
     </div>
     <div class="row">
       ${badge(t.amount_band)}
@@ -95,7 +130,7 @@ export default {
    */
   template() {
     return `
-      <section>
+      <section class="tenders">
         <div class="card">
           <div class="row between">
             <h3>Tenders</h3>
@@ -174,6 +209,13 @@ export default {
         els.band.value =
           k === "small" ? "<R200k" : k === "mid" ? "R200k–R1m" : ">R1m";
         apply();
+      });
+    });
+    const chips = document.querySelectorAll("[data-band]");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
       });
     });
 
