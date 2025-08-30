@@ -1,30 +1,39 @@
 /* @file Global variables, base tags, helpers (spacers, small text). */
 
 :root {
-  --bg: #0f1115;
-  --panel: #171a21;
-  --muted: #9aa3b2;
-  --text: #e6e9ef;
-  --brand: #4f8cff;
-  --ok: #22c55e;
-  --warn: #f59e0b;
-  --fail: #ef4444;
-  --card: #12151b;
-  --bd: #222632;
+  /* Brand */
+  --brand: #3b82f6; /* Primary blue */
+  --brand-dark: #1d4ed8; /* Darker blue */
+  --accent: #10b981; /* Success green */
+  --warn: #f59e0b; /* Amber warning */
+  --error: #ef4444; /* Error red */
+
+  /* Neutrals */
+  --bg: #f9fafb; /* App background */
+  --card: #ffffff; /* Card/panel background */
+  --bd: #e5e7eb; /* Border */
+  --panel: #ffffff; /* Sidebar/topbar panels */
+
+  /* Text */
+  --text: #111827; /* Main text */
+  --muted: #6b7280; /* Secondary text */
+  --inverted: #ffffff; /* Text on dark backgrounds */
 }
+
+/* Apply global body */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+}
+
 * {
   box-sizing: border-box;
 }
 html,
 body {
   height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
-    "Helvetica Neue", Arial;
-  background: var(--bg);
-  color: var(--text);
 }
 a {
   color: inherit;
