@@ -1,3 +1,21 @@
+/**
+ * @file Tender List page (mock): filters by sector, province, amount band,
+ *       and search text. Later consumes /api/tenders and /api/tenders/:id.
+ */
+
+/**
+ * @typedef {Object} Tender
+ * @property {string} id
+ * @property {string} title
+ * @property {string} entity
+ * @property {string} province
+ * @property {string} sector
+ * @property {string} category  // RFQ|RFP
+ * @property {string} amount_band // "<R200k" | "R200k–R1m" | ">R1m"
+ * @property {string} closing_date // YYYY-MM-DD
+ * @property {string} posted_date  // YYYY-MM-DD
+ * @property {string} source_url
+ */
 // Tender List (mock data for now). Later: fetch from /api/tenders
 const MOCK = [
   {
@@ -81,6 +99,10 @@ function renderList(rows) {
 }
 
 export default {
+  /**
+   * Render tenders UI: filters + list container.
+   * @return {string}
+   */
   template() {
     return `
       <section>
@@ -118,6 +140,11 @@ export default {
     `;
   },
 
+  /**
+   * Wire filters and list rendering.
+   * Later: replace mock array with fetch('/api/tenders?...').
+   * @return {void}
+   */
   onMount() {
     const els = {
       q: document.getElementById("q"),

@@ -1,6 +1,15 @@
+/**
+ * @file Settings page: notification toggles and WhatsApp number.
+ *       Persists demo values in localStorage. Later calls /api/settings/notifications.
+ */
+
 import { state } from '../utils/state.js';
 
 export default {
+  /**
+   * Render settings form.
+   * @return {string}
+   */
   template() {
     return `
       <section>
@@ -20,6 +29,10 @@ export default {
       </section>
     `;
   },
+  /**
+   * Bind save action: persists demo values locally.
+   * @return {void}
+   */
   onMount() {
     document.getElementById('saveBtn')?.addEventListener('click', ()=>{
       const wa = document.getElementById('waNumber').value.trim();

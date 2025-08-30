@@ -1,4 +1,13 @@
+/**
+ * @file Compliance report view: traffic-light status, missing items,
+ *       and share/download actions. Later fetches /api/reports/:projectId.
+ */
+
 export default {
+   /**
+   * Render report page.
+   * @return {string}
+   */
   template() {
     return `
       <section>
@@ -26,6 +35,11 @@ export default {
       </section>
     `;
   },
+   /**
+   * Bind “Send via WhatsApp” (reads number from localStorage in demo).
+   * Later: deep link to a hosted report URL.
+   * @return {void}
+   */
   onMount() {
     document.getElementById('btnWhatsappReport')?.addEventListener('click', (e)=>{
       e.preventDefault();

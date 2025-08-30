@@ -1,5 +1,18 @@
+/**
+ * @file Workspace (private app area): upload RFQ/RFP, show checklist & progress,
+ *       quick actions, and submission pack button (demo).
+ *
+ * Imports state; later will import compliance services.
+ */
+
+
 import { state } from '../utils/state.js';
 
+/**
+ * Build a checklist row for a given item.
+ * @param {{key:string,label:string,done:boolean,note:string}} it
+ * @return {string} HTML
+ */
 const row = (it) => {
   const badge = it.done ? '<span class="pill pill-ok">Completed</span>' :
                           '<span class="pill pill-fail">Missing</span>';
@@ -13,9 +26,18 @@ const row = (it) => {
     </div>`;
 };
 
+/**
+ * Compute progress percentage based on completed checklist items.
+ * @return {number} 0–100
+ */
 const pct = () => Math.round((state.wsItems.filter(i => i.done).length / state.wsItems.length) * 100);
 
 export default {
+
+  /**
+   * Render workspace page.
+   * @return {string}
+   */
   template() {
     return `
       <section>
@@ -86,6 +108,11 @@ export default {
       </section>
     `;
   },
+    /**
+   * Bind checklist actions and demo “Generate Submission Package”.
+   * Later: replace with real calls to /api/compliance/*.
+   * @return {void}
+   */
   onMount() {
     document.querySelectorAll('[data-mark]').forEach(btn => {
       btn.addEventListener('click', () => {

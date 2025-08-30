@@ -1,3 +1,15 @@
+/**
+ * @file Minimal hash router. Renders a module for each route.
+ * @typedef {Object} RouteModule
+ * @property {() => string} template - Returns HTML to inject.
+ * @property {() => void} [onMount]  - Optional hook after DOM is injected.
+ */
+
+/**
+ * Initialize hash router and render on navigation.
+ * @param {Record<string, RouteModule>} routeMap - Map of "#/path" -> module.
+ * @param {string} [defaultRoute='#/landing'] - Fallback route if hash is empty/unknown.
+ */
 export function initRouter(routeMap, defaultRoute = '#/landing') {
   const root = document.getElementById('app');
   const navLinks = () => document.querySelectorAll('[data-route]');

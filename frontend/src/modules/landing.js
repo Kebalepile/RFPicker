@@ -1,4 +1,16 @@
+/**
+ * @file Public landing page: hero, features, pricing, FAQ.
+ *       CTAs route to app pages (Workspace/Tenders) while auth is bypassed.
+ *
+ * Module contract:
+ * - template(): string  -> page HTML
+ * - onMount(): void     -> bind CTA buttons
+ */
 export default {
+  /**
+   * Render landing HTML.
+   * @return {string}
+   */
   template() {
     return `
       <section class="landing">
@@ -137,6 +149,10 @@ export default {
     `;
   },
 
+  /**
+   * Bind CTA buttons for navigation (no auth yet).
+   * @return {void}
+   */
   onMount() {
     // For now, “Login” and primary CTAs go straight to the app (no auth yet)
     const goApp = () => (location.hash = '#/workspace');
