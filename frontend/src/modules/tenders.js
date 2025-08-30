@@ -4,17 +4,7 @@
  */
 
 /**
- * @typedef {Object} Tender
- * @property {string} id
- * @property {string} title
- * @property {string} entity
- * @property {string} province
- * @property {string} sector
- * @property {string} category  // RFQ|RFP
- * @property {string} amount_band // "<R200k" | "R200k–R1m" | ">R1m"
- * @property {string} closing_date // YYYY-MM-DD
- * @property {string} posted_date  // YYYY-MM-DD
- * @property {string} source_url
+  @param {Tender[]} 
  */
 // Tender List (mock data for now). Later: fetch from /api/tenders
 const MOCK = [

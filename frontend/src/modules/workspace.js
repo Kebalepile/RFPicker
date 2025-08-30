@@ -10,7 +10,7 @@ import { state } from '../utils/state.js';
 
 /**
  * Build a checklist row for a given item.
- * @param {{key:string,label:string,done:boolean,note:string}} it
+ *  @param {ChecklistItem} it 
  * @return {string} HTML
  */
 const row = (it) => {
