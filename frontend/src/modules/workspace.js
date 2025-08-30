@@ -39,11 +39,26 @@ export default {
    */
   template() {
     return `
-      <section>
-        <div class="grid cols-3">
-          <div class="card"><div class="kpi"><h3>Active Tenders</h3><span class="pill">3</span></div></div>
-          <div class="card"><div class="kpi"><h3>Completed</h3><span class="pill">12</span></div></div>
-          <div class="card"><div class="kpi"><h3>Needs Attention</h3><span class="pill">1</span></div></div>
+      <section class="workspace">
+        <div class="kpi-strip">
+            <button class="kpi-chip" data-kind="active" data-count="3" aria-label="Active tenders">
+              <span class="ico">📂</span>
+              <span class="label">Active</span>
+              <span class="count">3</span>
+            </button>
+
+            <button class="kpi-chip" data-kind="done" data-count="12" aria-label="Completed tenders">
+              <span class="ico">✅</span>
+              <span class="label">Completed</span>
+              <span class="count">12</span>
+            </button>
+
+            <button class="kpi-chip warn" data-kind="attention" data-count="1" aria-label="Needs attention">
+              <span class="ico">⚠️</span>
+              <span class="label">Needs attention</span>
+              <span class="count">1</span>
+            </button>
+    
         </div>
 
         <div class="grid cols-2" style="margin-top:16px">
@@ -96,11 +111,12 @@ export default {
             <div class="help-inner">
               <h3>Need Help?</h3>
               <div>Our tender experts are here to assist you</div>
-              <div class="sp8"></div>
+              <div class="sp8"> </div>
+              <p>Contact Support</p>
               <div>📞 +27 11 123 4567</div>
               <div>💬 WhatsApp Support</div>
               <div class="sp12"></div>
-              <a class="btn" href="#/settings">Contact Support</a>
+             
             </div>
           </div>
         </div>
@@ -113,6 +129,7 @@ export default {
    * @return {void}
    */
   onMount() {
+
     document.querySelectorAll('[data-mark]').forEach(btn => {
       btn.addEventListener('click', () => {
         const key = btn.dataset.mark;
@@ -123,8 +140,46 @@ export default {
         location.hash = ''; requestAnimationFrame(()=> location.hash = hash);
       });
     });
+
     document.getElementById('wsGenerate')?.addEventListener('click', () => {
       alert('ZIP package generator – placeholder');
     });
+
+    const dz = document.querySelector('.filebox');
+    if (dz) {
+      ['dragenter','dragover'].forEach(ev =>
+        dz.addEventListener(ev, (e)=>{ e.preventDefault(); dz.classList.add('is-dragover'); })
+      );
+      ['dragleave','drop'].forEach(ev =>
+        dz.addEventListener(ev, (e)=>{ e.preventDefault(); dz.classList.remove('is-dragover'); })
+      );
+    }
+    // KPI chip interactions
+    document.querySelectorAll('.kpi-chip').forEach(chip => {
+      const count = Number(chip.dataset.count || '0');
+      if (count === 0) chip.style.display = 'none'; // auto-hide zeros
+
+      chip.addEventListener('click', () => {
+        const kind = chip.dataset.kind;
+
+        // Scroll to relevant area
+        const checklist = document.getElementById('wsChecklist');
+        if (checklist) {
+          checklist.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Highlight relevant rows
+          checklist.querySelectorAll('.item').forEach(el => el.classList.remove('pulse'));
+          if (kind === 'attention') {
+            checklist.querySelectorAll('.bg-fail').forEach(el => el.classList.add('pulse'));
+          } else if (kind === 'done') {
+            checklist.querySelectorAll('.bg-ok').forEach(el => el.classList.add('pulse'));
+          } else {
+            // active: flash the whole checklist briefly
+            checklist.classList.add('pulse');
+            setTimeout(()=> checklist.classList.remove('pulse'), 1200);
+          }
+        }
+      });
+    });
+
   }
 };
