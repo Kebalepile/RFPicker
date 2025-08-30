@@ -6,7 +6,7 @@
 /**
  * Get a compliance report.
  * @param {string} projectId
- * @return {Promise<{status: string, summary: object, missing: Array}>}
+ * @return {Promise<Report>}  // see typedefs in src/types.js
  */
 export async function getReport(projectId) {
   const res = await fetch(`/api/reports/${encodeURIComponent(projectId)}`);
