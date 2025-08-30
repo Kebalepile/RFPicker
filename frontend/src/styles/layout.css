@@ -1,3 +1,5 @@
+/* @file Page layout: app grid, sidebar, topbar, progress bars, backdrop. */
+
 .app {
   display: grid;
   grid-template-columns: 260px 1fr;
