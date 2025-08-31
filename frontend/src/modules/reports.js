@@ -10,7 +10,7 @@ export default {
    */
   template() {
     return `
-      <section>
+      <section class="report" aria-labelledby="report-title">
         <div class="grid cols-2">
           <div class="card">
             <div class="kpi"><h3>Compliance Report</h3><span class="pill pill-warn">RISK</span></div>

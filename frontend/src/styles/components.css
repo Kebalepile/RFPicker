@@ -886,3 +886,95 @@ a.btn {
 .tenders #tenderList .item {
   padding: 12px 14px;
 }
+
+/* ===== REPORT COMPONENT (scoped) ===== */
+.report .card {
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04),
+              0 6px 22px rgba(17, 24, 39, 0.06);
+  padding: 16px;
+}
+
+.report .kpi{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; margin-bottom:10px;
+}
+.report .kpi h3{ margin:0; font-size:16px; }
+
+/* Pills (traffic light) */
+.report .pill{
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid var(--bd);
+  border-radius:999px; padding:6px 12px;
+  font-size:12px; font-weight:700; letter-spacing:.4px;
+  text-transform:uppercase; background:#fff; color:var(--text);
+}
+.report .pill::before{
+  content:""; width:8px; height:8px; border-radius:50%;
+  box-shadow: 0 0 0 3px rgba(0,0,0,.04) inset;
+}
+.report .pill-ok{ background: rgba(16,185,129,.10); border-color: rgba(16,185,129,.35); color:#0a3b2c; }
+.report .pill-ok::before{ background:#10b981; }
+.report .pill-warn{ background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.45); color:#7a4d02; }
+.report .pill-warn::before{ background:#f59e0b; }
+.report .pill-danger{ background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.45); color:#6b0f1a; }
+.report .pill-danger::before{ background:#ef4444; }
+
+.report .muted{ color: var(--muted); }
+
+/* List of issues */
+.report .list{
+  margin-top:10px; display:flex; flex-direction:column; gap:10px;
+}
+.report .item{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:12px 14px;
+  border:1px dashed var(--bd); border-radius:12px; background:#fff;
+  transition: transform .12s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.report .item:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 3px 14px rgba(17,24,39,.08);
+  border-color: color-mix(in srgb, var(--brand) 25%, var(--bd));
+}
+.report .item b{ font-weight:700; }
+.report .item .meta{ color: var(--muted); font-size:12px; }
+
+/* Buttons — reuse your .btn style; just add semantic accents */
+.report .btn{
+  min-height:36px; border-radius:8px; font-weight:600; font-size:14px;
+  padding:8px 12px; text-decoration:none; cursor:pointer;
+  border:1px solid var(--bd); background: var(--card); color: var(--text);
+  transition: transform .12s ease, background .15s ease, border-color .15s ease;
+}
+.report .btn:hover{ transform: translateY(-1px); }
+.report .btn.ghost:hover{ background: rgba(59,130,246,.06); }
+
+.report .btn.ok{
+  background:#10b981; border-color:#10b981; color:var(--inverted);
+  box-shadow: 0 6px 16px rgba(16,185,129,.18);
+}
+.report .btn.warn{
+  background:#f59e0b; border-color:#f59e0b; color:#1b1200;
+  box-shadow: 0 6px 16px rgba(245,158,11,.18);
+}
+.report .btn.danger{
+  background:#ef4444; border-color:#ef4444; color:#2a0000;
+  box-shadow: 0 6px 16px rgba(239,68,68,.18);
+}
+
+.report .row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+
+/* Responsive tighten */
+@media (max-width: 560px){
+  .report .item{ flex-direction: column; align-items: flex-start; }
+  .report .row{ gap:8px; }
+}
+
+/* Print-friendly for report only */
+@media print{
+  .report .card{ box-shadow:none; }
+  .report .btn{ display:none !important; }
+}
