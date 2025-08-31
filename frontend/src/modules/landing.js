@@ -39,7 +39,7 @@ export default {
           <div class="card">
             <div class="step-num">1</div>
             <h3>Upload RFQ/RFP</h3>
-            <p class="muted">PDF in, we parse key admin & technical returnables.</p>
+            <p class="muted">PDF in, analyse key admin & technical returnables.</p>
           </div>
           <div class="card">
             <div class="step-num">2</div>
@@ -54,40 +54,41 @@ export default {
         </section>
 
         <!-- Features -->
-        <!-- FAQ -->
-        <section class="landing-faq card">
-          <h3>FAQ</h3>
+       <!-- Features -->
+<section class="landing-features grid cols-3">
+  <div class="card feature">
+    <div class="ico">📑</div>
+    <h3>Auto-Checklist</h3>
+    <p class="muted">We audit your RFQ/RFP and surface admin + technical returnables instantly.</p>
+    <ul class="feature-list">
+      <li>SBDs & returnables detected</li>
+      <li>Due dates & validity hints</li>
+      <li>Export to workspace</li>
+    </ul>
+  </div>
 
-          <details>
-            <summary>Do I need an email address?</summary>
-            <p class="muted">No. We use phone + OTP, and send reports via WhatsApp or SMS.</p>
-          </details>
+  <div class="card feature">
+    <div class="ico">🧭</div>
+    <h3>Compliance Guidance</h3>
+    <p class="muted">Compliance rating with clear, fix-first suggestions for gaps.</p>
+    <ul class="feature-list">
+      <li>BBBEE, Tax PIN, CSD checks</li>
+      <li>“What’s missing” summary</li>
+      <li>One-click fix actions</li>
+    </ul>
+  </div>
 
-          <details>
-            <summary>Which documents do you check?</summary>
-            <p class="muted">
-              Common SBDs (1, 4, 6.1, etc.), BBBEE, Tax PIN/CSD, and typical returnables for RFQs.
-            </p>
-          </details>
-
-          <details>
-            <summary>Is this a tender listing site?</summary>
-            <p class="muted">
-              Not exactly. TenderPick includes a curated tender list from official sources,
-              but with a twist: each listing comes with a <b>summary of the required documents</b>
-              and key compliance info. This makes it easier for first-timers to know what’s expected.
-            </p>
-          </details>
-
-          <details>
-            <summary>Is there a fee for the tender list with summaries?</summary>
-            <p class="muted">
-              Yes. While browsing tenders is free, access to the <b>document summary,
-              compliance breakdown, and checklist export</b> will require a paid plan.
-            </p>
-          </details>
-        </section>
-
+  <div class="card feature">
+    <div class="ico">💬</div>
+    <h3>WhatsApp/SMS Reports</h3>
+    <p class="muted">Share simple, client-ready updates from your phone.</p>
+    <ul class="feature-list">
+      <li>One-tap share link</li>
+      <li>Compact status summary</li>
+      <li>No email required</li>
+    </ul>
+  </div>
+</section>
 
         <!-- Pricing (preview) -->
        
@@ -125,20 +126,37 @@ export default {
         </section>
 
 
-        <!-- FAQ -->
+         <!-- FAQ -->
         <section class="landing-faq card">
           <h3>FAQ</h3>
+
           <details>
             <summary>Do I need an email address?</summary>
             <p class="muted">No. We use phone + OTP, and send reports via WhatsApp or SMS.</p>
           </details>
+
           <details>
             <summary>Which documents do you check?</summary>
-            <p class="muted">Common SBDs (1, 4, 6.1, etc.), BBBEE, Tax PIN/CSD, and typical returnables for RFQs.</p>
+            <p class="muted">
+              Common SBDs (1, 4, 6.1, etc.), BBBEE, Tax PIN/CSD, and typical returnables for RFQs.
+            </p>
           </details>
+
           <details>
             <summary>Is this a tender listing site?</summary>
-            <p class="muted">No. TenderPick focuses on compliance checking and pack preparation.</p>
+            <p class="muted">
+              Not exactly. TenderPick includes a curated tender list from official sources,
+              but with a twist: each listing comes with a <b>summary of the required documents</b>
+              and key compliance info. This makes it easier for first-timers to know what’s expected.
+            </p>
+          </details>
+
+          <details>
+            <summary>Is there a fee for the tender list with summaries?</summary>
+            <p class="muted">
+              Yes. While browsing tenders is free, access to the <b>document summary,
+              compliance breakdown, and checklist export</b> will require a paid plan.
+            </p>
           </details>
         </section>
 

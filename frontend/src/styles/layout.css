@@ -102,3 +102,49 @@
   height: 10px;
   background: var(--warn);
 }
+/* ===== TOPBAR BUTTONS ===== */
+
+/* New Project button inside search bar */
+.topbar .btn.ghost {
+  border: 2px solid var(--brand);
+  background: transparent;
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  min-height: 36px;
+  transition: background .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.topbar .btn.ghost:hover {
+  background: rgba(59,130,246,.06); /* subtle brand tint */
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(59,130,246,.15);
+}
+.topbar .btn.ghost:active {
+  transform: translateY(0);
+}
+.topbar .btn.ghost:focus {
+  outline: 2px solid color-mix(in srgb, var(--brand) 35%, white);
+  outline-offset: 2px;
+}
+
+/* User badge ("Not signed in") */
+.topbar .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(17,24,39,.06);
+  border: 1px solid var(--bd);
+  transition: background .15s ease, border-color .15s ease;
+}
+.topbar .pill:hover {
+  background: rgba(59,130,246,.08);
+  border-color: color-mix(in srgb, var(--brand) 25%, var(--bd));
+  color: var(--brand);
+}

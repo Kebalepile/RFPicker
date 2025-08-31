@@ -14,7 +14,7 @@ export default {
         <div class="grid cols-2">
           <div class="card">
             <div class="kpi"><h3>Compliance Report</h3><span class="pill pill-warn">RISK</span></div>
-            <p class="muted">Traffic-light status for your submission.</p>
+            <p class="muted">Compliance rating for your submission.</p>
             <div class="list">
               <div class="item"><div>Missing: <b>BBBEE Certificate</b></div><a class="btn" href="#/workspace">Fix</a></div>
             </div>
