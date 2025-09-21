@@ -287,6 +287,17 @@ export default {
       list: document.getElementById('tenderList'),
       pager: document.getElementById('tenderPager')
     };
+// Smooth-scroll to the top of the tender list/card
+const scrollToTendersTop = () => {
+  // Aim for the card wrapper so the header stays visible
+  const host = els.list?.closest('.card') || els.list || document.querySelector('.tenders');
+  if (!host) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+  const y = host.getBoundingClientRect().top + window.pageYOffset - 8; // small cushion
+  window.scrollTo({ top: y, behavior: 'smooth' });
+};
 
     let DATA = [];
     try {
@@ -374,6 +385,7 @@ export default {
       if (next)  state.page = Math.min(pages, state.page + 1);
       if (last)  state.page = pages;
       apply();
+       scrollToTendersTop()
     });
 
     els.pager.addEventListener('change', (e) => {
@@ -384,6 +396,7 @@ export default {
         state.pageSize = n;
         state.page = 1;
         apply();
+        scrollToTendersTop();
       }
     });
 

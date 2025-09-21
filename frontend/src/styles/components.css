@@ -847,19 +847,13 @@ a.btn {
   gap: 16px;
 }
 .tenders #tenderList .item,
-.tenders .tcard {
+.tenders {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-/* Cards fill their grid column cleanly */
-.tenders #tenderList .item,
-.tenders .tcard {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
+
 /* Keep inner layout tidy; avoid stretching that breaks widths */
 .tenders #tenderList .item {
   align-items: stretch;
@@ -1667,3 +1661,41 @@ a.btn {
 .row.wrap {
   flex-wrap: wrap;
 }
+
+
+/* ====== TENDER LIST FIX (single column, no horizontal scroll) ====== */
+/* Final overrides to normalize conflicting earlier rules */
+.tenders { max-width: 1200px; margin: 0 auto; }
+
+/* Kill any grid styles that slipped in earlier and force a clean stack */
+.tenders .list,
+.tenders #tenderList {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Card should never exceed its container width */
+.tcard {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Make inner content shrinkable so ellipses/wrapping work and no overflow */
+.tcard * { min-width: 0; }
+
+/* Long strings & URLs must wrap gracefully */
+.tcard .kv-v,
+.tcard .doc-link {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+
+/* Defensive: clamp any accidental horizontal overflow on the page area */
+.app, .main, .tenders, #tenderList { overflow-x: hidden; }
+
