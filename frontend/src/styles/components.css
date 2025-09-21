@@ -853,7 +853,6 @@ a.btn {
   box-sizing: border-box;
 }
 
-
 /* Keep inner layout tidy; avoid stretching that breaks widths */
 .tenders #tenderList .item {
   align-items: stretch;
@@ -1662,10 +1661,12 @@ a.btn {
   flex-wrap: wrap;
 }
 
-
 /* ====== TENDER LIST FIX (single column, no horizontal scroll) ====== */
 /* Final overrides to normalize conflicting earlier rules */
-.tenders { max-width: 1200px; margin: 0 auto; }
+.tenders {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
 /* Kill any grid styles that slipped in earlier and force a clean stack */
 .tenders .list,
@@ -1686,7 +1687,9 @@ a.btn {
 }
 
 /* Make inner content shrinkable so ellipses/wrapping work and no overflow */
-.tcard * { min-width: 0; }
+.tcard * {
+  min-width: 0;
+}
 
 /* Long strings & URLs must wrap gracefully */
 .tcard .kv-v,
@@ -1697,5 +1700,43 @@ a.btn {
 }
 
 /* Defensive: clamp any accidental horizontal overflow on the page area */
-.app, .main, .tenders, #tenderList { overflow-x: hidden; }
+.app,
+.main,
+.tenders,
+#tenderList {
+  overflow-x: hidden;
+}
 
+/* ===== Skeleton Loader ===== */
+.skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+/* Skeleton variants */
+.skel-card {
+  height: 140px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.skel-line {
+  height: 14px;
+  width: 80%;
+  margin: 6px 0;
+}
+.skel-small {
+  height: 12px;
+  width: 60%;
+  margin: 4px 0;
+}

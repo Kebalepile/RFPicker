@@ -147,7 +147,6 @@ function card(t) {
   const briefBlock   = renderKV(briefing, briefingLabels);
   const docsBlock    = renderDocs(documents);
 
-  // top-line chips like eTenders “Category • Province • Buyer”
   const metaLine = [
     prov ? `${provinceIcon(prov)} ${prov}` : '',
     buyer || '',
@@ -158,7 +157,8 @@ function card(t) {
     <header class="tcard-head">
       <div class="tcard-title">
         <span class="cat">${categoryIcon(cat)}</span>
-        <b class="title">${headline}</b>
+        <br/><br/>
+        <p >${headline}</p>
       </div>
       <div class="tcard-sub">
         ${metaLine ? `<span class="muted">${metaLine}</span>` : ''}
@@ -183,12 +183,11 @@ function card(t) {
   </article>`;
 }
 
-// after your apply() definition, hook a delegated listener once (inside onMount)
+// Close siblings in a card (accordion)
 document.addEventListener('click', (e) => {
   const sum = e.target.closest('.tcard .sect > summary');
   if (!sum) return;
   const detailsEl = sum.parentElement;
-  // close sibling sections inside the SAME card (accordion feel like eTenders)
   detailsEl.parentElement.querySelectorAll(':scope > .sect').forEach(d => {
     if (d !== detailsEl) d.removeAttribute('open');
   });
@@ -205,26 +204,58 @@ function paginate(arr, page, pageSize) {
   return { slice: arr.slice(start, end), total, pages, page: p, start: start + 1, end };
 }
 
+// Build numbered page items with ellipses (window size configurable)
+function buildPageItems(current, total, windowSize = 7) {
+  const items = [];
+  const add = (type, num) => items.push({ type, num });
+
+  if (total <= windowSize) {
+    for (let i = 1; i <= total; i++) add('num', i);
+    return items;
+  }
+  const inner = windowSize - 2; // excluding first/last
+  let left = Math.max(2, current - Math.floor(inner / 2));
+  let right = Math.min(total - 1, left + inner - 1);
+  left = Math.max(2, Math.min(left, Math.max(2, right - inner + 1)));
+
+  add('num', 1);
+  if (left > 2) add('ellipsis');
+  for (let i = left; i <= right; i++) add('num', i);
+  if (right < total - 1) add('ellipsis');
+  add('num', total);
+  return items;
+}
+
 function renderPager({ page, pages, total }) {
   const disablePrev = page <= 1 ? 'disabled' : '';
   const disableNext = page >= pages ? 'disabled' : '';
 
+  const nums = buildPageItems(page, pages, 7)
+    .map(p =>
+      p.type === 'ellipsis'
+        ? `<span class="pager-ellipsis">…</span>`
+        : `<button class="btn ghost pg-num ${p.num === page ? 'active' : ''}"
+                   data-page="${p.num}" ${p.num === page ? 'aria-current="page"' : ''}>${p.num}</button>`
+    ).join('');
+
   return `
-    <div class="pager">
+    <nav class="pager" role="navigation" aria-label="Pagination">
       <div class="pager-left">
         <span class="muted small">Page ${page} of ${pages} · ${total} tenders</span>
       </div>
       <div class="pager-right">
-        <button class="btn ghost pg-first" ${disablePrev}>First</button>
-        <button class="btn ghost pg-prev" ${disablePrev}>Prev</button>
-        <button class="btn ghost pg-next" ${disableNext}>Next</button>
-        <button class="btn ghost pg-last" ${disableNext}>Last</button>
+        <button class="btn ghost pg-first" ${disablePrev} aria-label="First page">First</button>
+        <button class="btn ghost pg-prev"  ${disablePrev} aria-label="Previous page">Prev</button>
+        ${nums}
+        <button class="btn ghost pg-next"  ${disableNext} aria-label="Next page">Next</button>
+        <button class="btn ghost pg-last"  ${disableNext} aria-label="Last page">Last</button>
         <select class="input pg-size" title="Page size">
           ${[12,15,24,50].map(n => `<option value="${n}" ${n===DEFAULT_PAGE_SIZE?'selected':''}>${n}/page</option>`).join('')}
         </select>
       </div>
-    </div>`;
+    </nav>`;
 }
+
 
 // ---------- View ----------
 function renderList(rows, page, pageSize) {
@@ -287,17 +318,13 @@ export default {
       list: document.getElementById('tenderList'),
       pager: document.getElementById('tenderPager')
     };
-// Smooth-scroll to the top of the tender list/card
-const scrollToTendersTop = () => {
-  // Aim for the card wrapper so the header stays visible
-  const host = els.list?.closest('.card') || els.list || document.querySelector('.tenders');
-  if (!host) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    return;
-  }
-  const y = host.getBoundingClientRect().top + window.pageYOffset - 8; // small cushion
-  window.scrollTo({ top: y, behavior: 'smooth' });
-};
+
+    // Smooth-scroll to the top of the tender list/card
+    const scrollToTendersTop = () => {
+      const host = els.list?.closest('.card') || els.list || document.querySelector('.tenders');
+      const y = host ? host.getBoundingClientRect().top + window.pageYOffset - 8 : 0;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    };
 
     let DATA = [];
     try {
@@ -348,13 +375,23 @@ const scrollToTendersTop = () => {
     };
 
     const apply = (opts = {}) => {
+      // Skeleton shimmer
+      els.list.innerHTML = `
+        <div class="skeleton skel-card"></div>
+        <div class="skeleton skel-card"></div>
+        <div class="skeleton skel-card"></div>
+      `;
+
       if (opts.resetPage) state.page = 1;
       state.filtered = computeFiltered();
-      const { page } = renderList(state.filtered, state.page, state.pageSize);
-      state.page = page; // in case it was clamped
+
+      setTimeout(() => {
+        const { page } = renderList(state.filtered, state.page, state.pageSize);
+        state.page = page;
+      }, 150);
     };
 
-    // Events
+    // Events: filters
     const onInput = () => apply({ resetPage: true });
     ['input', 'change'].forEach(ev => {
       els.q.addEventListener(ev, onInput);
@@ -369,23 +406,31 @@ const scrollToTendersTop = () => {
       state.page = 1;
       state.pageSize = DEFAULT_PAGE_SIZE;
       apply({ resetPage: true });
+      scrollToTendersTop();
     });
 
-    // Pager controls (event delegation)
+    // Pager controls (delegated)
     els.pager.addEventListener('click', (e) => {
       const first = e.target.closest('.pg-first');
       const prev  = e.target.closest('.pg-prev');
       const next  = e.target.closest('.pg-next');
       const last  = e.target.closest('.pg-last');
-      if (!first && !prev && !next && !last) return;
+      const num   = e.target.closest('.pg-num');
+      if (!first && !prev && !next && !last && !num) return;
 
       const { pages } = paginate(state.filtered, state.page, state.pageSize);
+
       if (first) state.page = 1;
-      if (prev)  state.page = Math.max(1, state.page - 1);
-      if (next)  state.page = Math.min(pages, state.page + 1);
-      if (last)  state.page = pages;
+      else if (prev) state.page = Math.max(1, state.page - 1);
+      else if (next) state.page = Math.min(pages, state.page + 1);
+      else if (last) state.page = pages;
+      else if (num) {
+        const n = parseInt(num.getAttribute('data-page'), 10);
+        if (!isNaN(n)) state.page = Math.min(Math.max(1, n), pages);
+      }
+
       apply();
-       scrollToTendersTop()
+      scrollToTendersTop();
     });
 
     els.pager.addEventListener('change', (e) => {
