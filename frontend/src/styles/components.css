@@ -1740,3 +1740,38 @@ a.btn {
   width: 60%;
   margin: 4px 0;
 }
+
+/* ===== Enhanced Skeleton Shell for Tender Page ===== */
+.skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* Whole-card skeleton shaped like a tcard */
+.skel-tcard {
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  background: #fff;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+/* Blocks inside the skeleton card */
+.skel-line { height: 14px; }
+.skel-small { height: 12px; }
+.skel-chip { height: 18px; width: 70px; border-radius: 999px; }
+.skel-btn  { height: 32px; width: 96px; border-radius: 8px; }
+
+.skel-row { display: flex; gap: 8px; align-items: center; }
+.skel-grow { flex: 1; }
+
+/* Pager skeleton pieces */
+.pager .skel-line { border-radius: 6px; }
+

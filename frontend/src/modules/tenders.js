@@ -256,6 +256,59 @@ function renderPager({ page, pages, total }) {
     </nav>`;
 }
 
+// Build one skeleton tcard (parent + children placeholders)
+function skeletonCardTemplate() {
+  return `
+    <article class="tcard skel-tcard" aria-hidden="true">
+      <div class="skel-row">
+        <span class="skeleton skel-line" style="width:18px;height:18px;border-radius:4px;"></span>
+        <span class="skeleton skel-line skel-grow"></span>
+      </div>
+      <div class="skel-row">
+        <span class="skeleton skel-small" style="width:35%;"></span>
+        <span class="skel-grow"></span>
+        <span class="skeleton skel-small" style="width:20%;"></span>
+      </div>
+      <div class="skeleton" style="height:1px;"></div>
+      <div class="skel-row">
+        <span class="skeleton skel-line" style="width:30%;"></span>
+      </div>
+      <div class="skel-row">
+        <span class="skeleton skel-small" style="width:70%;"></span>
+      </div>
+      <div class="skel-row">
+        <span class="skeleton skel-chip"></span>
+        <span class="skeleton skel-chip"></span>
+        <span class="skeleton skel-chip" style="width:100px;"></span>
+      </div>
+      <div class="skel-row">
+        <span class="skeleton skel-btn"></span>
+        <span class="skeleton skel-btn" style="width:80px;"></span>
+      </div>
+    </article>
+  `;
+}
+
+// Show a full parent-level skeleton shell with N child cards + pager skeleton
+function showSkeletonShell(els, count) {
+  // Fill list (.tenders > .card > #tenderList) with N skeleton tcards
+  const n = Math.max(3, Math.min(count || DEFAULT_PAGE_SIZE, 12));
+  els.list.innerHTML = Array.from({ length: n }, skeletonCardTemplate).join('');
+
+  // Pager skeleton (parent area feedback)
+  els.pager.innerHTML = `
+    <div class="pager">
+      <div class="pager-left">
+        <span class="skeleton skel-line" style="width:160px;"></span>
+      </div>
+      <div class="pager-right">
+        <span class="skeleton skel-btn" style="width:72px;"></span>
+        <span class="skeleton skel-btn" style="width:72px;"></span>
+        <span class="skeleton skel-btn" style="width:160px;"></span>
+      </div>
+    </div>
+  `;
+}
 
 // ---------- View ----------
 function renderList(rows, page, pageSize) {
@@ -318,6 +371,8 @@ export default {
       list: document.getElementById('tenderList'),
       pager: document.getElementById('tenderPager')
     };
+    // Show parent-level skeleton immediately (slow networks feel snappier)
+    showSkeletonShell(els, DEFAULT_PAGE_SIZE);
 
     // Smooth-scroll to the top of the tender list/card
     const scrollToTendersTop = () => {
@@ -374,22 +429,20 @@ export default {
       return rows;
     };
 
-    const apply = (opts = {}) => {
-      // Skeleton shimmer
-      els.list.innerHTML = `
-        <div class="skeleton skel-card"></div>
-        <div class="skeleton skel-card"></div>
-        <div class="skeleton skel-card"></div>
-      `;
+ const apply = (opts = {}) => {
+  // Parent-level skeleton (list + pager)
+  showSkeletonShell(els, state.pageSize);
 
-      if (opts.resetPage) state.page = 1;
-      state.filtered = computeFiltered();
+  if (opts.resetPage) state.page = 1;
+  state.filtered = computeFiltered();
 
-      setTimeout(() => {
-        const { page } = renderList(state.filtered, state.page, state.pageSize);
-        state.page = page;
-      }, 150);
-    };
+  // Let the skeleton paint first; then render the real page
+  setTimeout(() => {
+    const { page } = renderList(state.filtered, state.page, state.pageSize);
+    state.page = page;
+  }, 150);
+};
+
 
     // Events: filters
     const onInput = () => apply({ resetPage: true });
