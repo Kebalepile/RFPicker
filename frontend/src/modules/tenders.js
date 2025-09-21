@@ -5,7 +5,7 @@
  * - Renders only a page slice (fast even with 2k+ items)
  */
 
-const DATA_URL = '/assets/database/open_tenders.json';
+const DATA_URL = './assets/database/open_tenders.json';
 const DEFAULT_PAGE_SIZE = 12;
 
 const HEAD_LABELS = {
@@ -258,36 +258,41 @@ function renderPager({ page, pages, total }) {
 
 // Build one skeleton tcard (parent + children placeholders)
 function skeletonCardTemplate() {
+  const baseStyle = 'background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);background-size:400% 100%;animation:sk-shimmer 1.4s ease infinite;-webkit-animation:sk-shimmer 1.4s ease infinite;border-radius:8px;';
+  const sk = (extra) => `class="skeleton" style="${baseStyle}${extra}"`;
+
   return `
-    <article class="tcard skel-tcard" aria-hidden="true">
-      <div class="skel-row">
-        <span class="skeleton skel-line" style="width:18px;height:18px;border-radius:4px;"></span>
-        <span class="skeleton skel-line skel-grow"></span>
+    <article class="tcard skel-tcard" aria-hidden="true" style="border:1px solid #e5e7eb;border-radius:14px;background:#fff;padding:14px;display:grid;gap:10px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('width:18px;height:18px;border-radius:4px;')}></span>
+        <span ${sk('height:14px;flex:1;')}></span>
       </div>
-      <div class="skel-row">
-        <span class="skeleton skel-small" style="width:35%;"></span>
-        <span class="skel-grow"></span>
-        <span class="skeleton skel-small" style="width:20%;"></span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('height:12px;width:35%;')}></span>
+        <span style="flex:1;"></span>
+        <span ${sk('height:12px;width:20%;')}></span>
       </div>
-      <div class="skeleton" style="height:1px;"></div>
-      <div class="skel-row">
-        <span class="skeleton skel-line" style="width:30%;"></span>
+      <div ${sk('height:1px;')}></div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('height:14px;width:30%;')}></span>
       </div>
-      <div class="skel-row">
-        <span class="skeleton skel-small" style="width:70%;"></span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('height:12px;width:70%;')}></span>
       </div>
-      <div class="skel-row">
-        <span class="skeleton skel-chip"></span>
-        <span class="skeleton skel-chip"></span>
-        <span class="skeleton skel-chip" style="width:100px;"></span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('height:18px;width:70px;border-radius:999px;')}></span>
+        <span ${sk('height:18px;width:70px;border-radius:999px;')}></span>
+        <span ${sk('height:18px;width:100px;border-radius:999px;')}></span>
       </div>
-      <div class="skel-row">
-        <span class="skeleton skel-btn"></span>
-        <span class="skeleton skel-btn" style="width:80px;"></span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span ${sk('height:32px;width:96px;border-radius:8px;')}></span>
+        <span ${sk('height:32px;width:80px;border-radius:8px;')}></span>
       </div>
     </article>
   `;
 }
+
+
 
 // Show a full parent-level skeleton shell with N child cards + pager skeleton
 function showSkeletonShell(els, count) {
@@ -328,6 +333,37 @@ function renderList(rows, page, pageSize) {
 function uniqueSorted(arr) {
   return Array.from(new Set(arr.filter(Boolean))).sort((a, b) => a.localeCompare(b));
 }
+// Ensure skeleton CSS exists (injects a tiny fallback if your CSS bundle didn't load on GH Pages)
+function ensureSkeletonStyles() {
+  const test = document.createElement('div');
+  test.className = 'skeleton skel-line';
+  document.body.appendChild(test);
+  const hasAnim = getComputedStyle(test).animationName !== 'none';
+  document.body.removeChild(test);
+  if (hasAnim) return;
+
+  const css = `
+    .skeleton{background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%);background-size:400% 100%;animation:sk-shimmer 1.4s ease infinite;-webkit-animation:sk-shimmer 1.4s ease infinite;border-radius:8px}
+    @keyframes sk-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+    @-webkit-keyframes sk-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+    .skel-line{height:14px}.skel-small{height:12px}.skel-chip{height:18px;width:70px;border-radius:999px}.skel-btn{height:32px;width:96px;border-radius:8px}
+    .skel-tcard{border:1px solid #e5e7eb;border-radius:14px;background:#fff;padding:14px;display:grid;gap:10px}
+  `;
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+}
+
+
+// Safer closest() without optional chaining for older mobile browsers
+function closestSafe(el, selector) {
+  while (el && el.nodeType === 1) {
+    if (el.matches(selector)) return el;
+    el = el.parentElement;
+  }
+  return null;
+}
+
 
 export default {
   template() {
@@ -363,6 +399,7 @@ export default {
   },
 
   async onMount() {
+    ensureSkeletonStyles();
     const els = {
       q: document.getElementById('q'),
       sector: document.getElementById('sector'),
@@ -375,11 +412,12 @@ export default {
     showSkeletonShell(els, DEFAULT_PAGE_SIZE);
 
     // Smooth-scroll to the top of the tender list/card
-    const scrollToTendersTop = () => {
-      const host = els.list?.closest('.card') || els.list || document.querySelector('.tenders');
-      const y = host ? host.getBoundingClientRect().top + window.pageYOffset - 8 : 0;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    };
+   const scrollToTendersTop = () => {
+  const host = closestSafe(els.list, '.card') || els.list || document.querySelector('.tenders');
+  const y = host ? host.getBoundingClientRect().top + window.pageYOffset - 8 : 0;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+};
+
 
     let DATA = [];
     try {
